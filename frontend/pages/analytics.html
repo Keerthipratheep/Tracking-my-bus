@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Analytics Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+  background:#0f172a;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+}
+
+canvas{
+  width:700px !important;
+  height:400px !important;
+  margin:auto;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>📊 Analytics Dashboard</h1>
+
+<canvas id="chart"></canvas>
+
+<script>
+
+const ctx = document.getElementById("chart");
+
+new Chart(ctx, {
+
+  type:"bar",
+
+  data:{
+
+    labels:["BUS-7","BUS-12","BUS-21"],
+
+    datasets:[{
+
+      label:"Students",
+
+      data:[40,35,28],
+
+      borderWidth:1
+
+    }]
+  }
+
+});
+
+</script>
+
+</body>
+</html>

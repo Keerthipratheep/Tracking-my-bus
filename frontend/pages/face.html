@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title>Face Recognition</title>
+
+  <style>
+
+    body{
+      background:#0f172a;
+      color:white;
+      font-family:Arial;
+      text-align:center;
+    }
+
+    video{
+      width:400px;
+      margin-top:30px;
+      border-radius:15px;
+    }
+
+    button{
+      padding:15px 30px;
+      border:none;
+      border-radius:10px;
+      background:#2563eb;
+      color:white;
+      cursor:pointer;
+      margin-top:20px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<h1>😮 Face Recognition Attendance</h1>
+
+<video id="video" autoplay></video>
+
+<br>
+
+<button onclick="markAttendance()">
+Mark Attendance
+</button>
+
+<script>
+
+navigator.mediaDevices.getUserMedia({
+  video:true
+})
+
+.then(stream=>{
+
+  document.getElementById("video").srcObject = stream;
+
+});
+
+function markAttendance(){
+
+  alert("Attendance Marked");
+
+}
+
+</script>
+
+</body>
+</html>

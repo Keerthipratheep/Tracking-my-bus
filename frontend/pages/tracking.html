@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Parent Bus Details</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+
+    min-height:100vh;
+    background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+
+}
+
+.card{
+
+    width:450px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    padding:30px;
+    color:white;
+    box-shadow:0 0 20px rgba(0,0,0,0.3);
+
+}
+
+h1{
+
+    text-align:center;
+    margin-bottom:25px;
+
+}
+
+.info{
+
+    margin-top:15px;
+    font-size:18px;
+    line-height:35px;
+
+}
+
+.loading{
+
+    text-align:center;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>🚌 Bus Information</h1>
+
+    <div id="details" class="loading">
+        Loading...
+    </div>
+
+</div>
+
+<script>
+
+const params =
+new URLSearchParams(window.location.search);
+
+const route =
+params.get("route");
+
+if(!route){
+
+    document.getElementById("details").innerHTML =
+    "Route not found.";
+
+}
+else{
+
+    fetch(
+    `http://localhost:8000/api/route/${encodeURIComponent(route)}`
+    )
+    .then(response => response.json())
+    .then(data => {
+
+        document.getElementById("details").innerHTML = `
+
+        <div class="info">
+
+        <strong>📍 Route:</strong>
+        ${data.route_name}
+
+        <br>
+
+        <strong>🚌 Bus Number:</strong>
+        ${data.bus_number}
+
+        <br>
+
+        <strong>👨‍✈️ Driver Name:</strong>
+        ${data.driver_name}
+
+        <br>
+
+        <strong>🆔 Driver ID:</strong>
+        ${data.driver_id}
+
+        <br>
+
+        <strong>📞 Driver Phone:</strong>
+        ${data.phone}
+
+        </div>
+
+        `;
+
+    })
+    .catch(error => {
+
+        document.getElementById("details").innerHTML =
+        "Unable to load route details.";
+
+        console.log(error);
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+ 
+<title>AI Chatbot</title>
+  
+<style>
+
+body{
+  background:#111827;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+}
+  
+.chatbox{
+  width:400px;
+  margin:auto;
+  margin-top:50px;
+  background:#1f2937;
+  padding:20px; 
+  border-radius:15px;
+}
+
+input{
+  width:80%;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+}
+
+button{
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+}
+
+#response{
+  margin-top:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>💬 AI Chatbot</h1>
+
+<div class="chatbox">
+
+<input type="text" id="question" placeholder="Ask about bus">
+
+<button onclick="askBot()">
+Ask
+</button>
+
+<div id="response"></div>
+
+</div>
+
+<script>
+
+function askBot(){
+
+  let q = document.getElementById("question").value;
+
+  if(q.includes("Bus 7")){
+
+    document.getElementById("response").innerHTML =
+    "🚍 Bus 7 arriving in 5 minutes";
+
+  }
+
+  else{
+
+    document.getElementById("response").innerHTML =
+    "🤖 AI Assistant Running";
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>

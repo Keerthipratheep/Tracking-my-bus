@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title>AI ETA Prediction</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial;
+    }
+
+    body{
+
+      background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+      min-height:100vh;
+      color:white;
+      padding:30px;
+
+    }
+
+    h1{
+
+      text-align:center;
+      font-size:50px;
+      margin-bottom:20px;
+
+    }
+
+    .container{
+
+      display:flex;
+      justify-content:center;
+      gap:30px;
+      flex-wrap:wrap;
+      margin-top:40px;
+
+    }
+
+    .card{
+
+      background:rgba(255,255,255,0.1);
+      backdrop-filter:blur(10px);
+      width:350px;
+      padding:30px;
+      border-radius:20px;
+      text-align:center;
+      box-shadow:0 0 20px rgba(0,0,0,0.4);
+      transition:0.3s;
+
+    }
+
+    .card:hover{
+
+      transform:scale(1.05);
+
+    }
+
+    .icon{
+
+      font-size:60px;
+      margin-bottom:15px;
+
+    }
+
+    .value{
+
+      font-size:28px;
+      color:#facc15;
+      margin-top:15px;
+      font-weight:bold;
+
+    }
+
+    .status{
+
+      margin-top:20px;
+      background:#22c55e;
+      padding:12px;
+      border-radius:12px;
+      font-size:18px;
+
+    }
+
+    button{
+
+      margin-top:20px;
+      padding:12px 25px;
+      border:none;
+      border-radius:12px;
+      background:#f97316;
+      color:white;
+      font-size:16px;
+      cursor:pointer;
+      transition:0.3s;
+
+    }
+
+    button:hover{
+
+      background:#ea580c;
+      transform:scale(1.05);
+
+    }
+
+    #routeBox{
+
+      margin-top:40px;
+      text-align:center;
+      font-size:22px;
+      line-height:45px;
+
+    }
+
+    iframe{
+
+      width:100%;
+      height:450px;
+      margin-top:30px;
+      border:none;
+      border-radius:20px;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<h1>⏳ AI ETA Prediction System</h1>
+
+<div class="container">
+
+  <div class="card">
+
+    <div class="icon">🚦</div>
+
+    <h2>Traffic Status</h2>
+
+    <div class="value" id="traffic">
+
+      Heavy Traffic
+
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="icon">⏳</div>
+
+    <h2>ETA Prediction</h2>
+
+    <div class="value" id="eta">
+
+      12 mins
+
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="icon">🛣️</div>
+
+    <h2>Route Suggestion</h2>
+
+    <div class="value" id="route">
+
+      Alternate Route Available
+
+    </div>
+
+  </div>
+
+</div>
+
+<div style="text-align:center;">
+
+  <button onclick="checkTraffic()">
+    Check Live Traffic
+  </button>
+
+</div>
+
+<div id="routeBox">
+
+</div>
+
+<iframe
+id="mapFrame"
+src="https://maps.google.com/maps?q=Anna%20Nagar%20Chennai&output=embed">
+</iframe>
+
+<script>
+
+function checkTraffic(){
+
+  let trafficLevels = [
+
+    "Low Traffic",
+    "Moderate Traffic",
+    "Heavy Traffic"
+
+  ];
+
+  let randomTraffic =
+
+  trafficLevels[
+    Math.floor(Math.random() * trafficLevels.length)
+  ];
+
+  document.getElementById("traffic").innerHTML =
+  randomTraffic;
+
+  if(randomTraffic === "Heavy Traffic"){
+
+    document.getElementById("eta").innerHTML =
+    "20 mins";
+
+    document.getElementById("route").innerHTML =
+    "Use Alternate Route";
+
+    document.getElementById("routeBox").innerHTML =
+
+    `
+    🚨 Heavy Traffic Detected Near Anna Nagar <br><br>
+
+    ✅ Suggested Alternate Route: <br>
+
+    Mogappair → Koyambedu → College Road
+
+    `;
+
+    document.getElementById("mapFrame").src =
+
+    "https://maps.google.com/maps?q=Mogappair%20Chennai&output=embed";
+
+  }
+
+  else if(randomTraffic === "Moderate Traffic"){
+
+    document.getElementById("eta").innerHTML =
+    "10 mins";
+
+    document.getElementById("route").innerHTML =
+    "Current Route Optimal";
+
+    document.getElementById("routeBox").innerHTML =
+
+    `
+    ⚡ Moderate Traffic Near Aminjikarai <br><br>
+
+    🛣️ Continue Current Route
+
+    `;
+
+    document.getElementById("mapFrame").src =
+
+    "https://maps.google.com/maps?q=Aminjikarai%20Chennai&output=embed";
+
+  }
+
+  else{
+
+    document.getElementById("eta").innerHTML =
+    "5 mins";
+
+    document.getElementById("route").innerHTML =
+    "Fastest Route Active";
+
+    document.getElementById("routeBox").innerHTML =
+
+    `
+    ✅ Roads Clear <br><br>
+
+    🚍 Fastest Route Selected Automatically
+
+    `;
+
+    document.getElementById("mapFrame").src =
+
+    "https://maps.google.com/maps?q=Anna%20Nagar%20Chennai&output=embed";
+
+  }
+
+}
+
+</script>
+
+</body>
+
+</html>

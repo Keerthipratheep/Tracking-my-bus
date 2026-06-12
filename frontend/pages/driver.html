@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title>Driver Dashboard</title>
+
+  <style>
+
+    body{
+      background:#0f172a;
+      color:white;
+      text-align:center;
+      font-family:Arial;
+      margin:0;
+      padding:0;
+    }
+
+    h1{
+      margin-top:30px;
+      font-size:40px;
+    }
+
+    .container{
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      margin-top:40px;
+      flex-wrap:wrap;
+    }
+
+    .card{
+      background:#1e293b;
+      width:250px;
+      padding:30px;
+      border-radius:15px;
+      box-shadow:0 0 15px rgba(0,0,0,0.5);
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:scale(1.05);
+    }
+
+    button{
+      padding:12px 20px;
+      border:none;
+      border-radius:10px;
+      background:#2563eb;
+      color:white;
+      cursor:pointer;
+      font-size:16px;
+      margin-top:10px;
+    }
+
+    button:hover{
+      background:#1d4ed8;
+    }
+
+    #locationBox{
+      margin-top:30px;
+      font-size:18px;
+      line-height:35px;
+    }
+
+    iframe{
+      margin-top:20px;
+      width:90%;
+      height:450px;
+      border-radius:15px;
+      border:none;
+      margin-bottom:30px;
+    }
+
+    .status{
+      margin-top:20px;
+      font-size:22px;
+      color:#22c55e;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<h1>👨‍✈️ Driver Dashboard</h1>
+
+<div class="container">
+
+  <div class="card">
+
+    <h2>🛣️ Start Route</h2>
+
+    <button onclick="startRoute()">
+      Start Route
+    </button>
+
+  </div>
+
+  <div class="card">
+
+    <h2>📍 Share Live Location</h2>
+
+    <button onclick="shareLocation()">
+      Share Location
+    </button>
+
+  </div>
+
+  <div class="card">
+
+    <h2>⚠️ Report Issue</h2>
+
+    <button onclick="reportIssue()">
+      Report Issue
+    </button>
+
+  </div>
+
+  <div class="card">
+
+    <h2>🟢 Driver Status</h2>
+
+    <button onclick="updateStatus()">
+      Update Status
+    </button>
+
+  </div>
+
+</div>
+
+<div class="status" id="statusText"></div>
+
+<div id="locationBox"></div>
+
+<iframe id="mapFrame"></iframe>
+
+<script>
+
+let watchId;
+
+function startRoute(){
+
+  if(navigator.geolocation){
+
+    navigator.geolocation.getCurrentPosition(
+
+      (position)=>{
+
+        let latitude = position.coords.latitude;
+        let longitude = position.coords.longitude;
+
+        document.getElementById("locationBox").innerHTML =
+        `
+        🚍 Route Started Successfully <br><br>
+
+        <b>Current Location:</b><br>
+
+        Latitude: ${latitude} <br>
+        Longitude: ${longitude}
+        `;
+
+        document.getElementById("mapFrame").src =
+        `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
+
+      },
+
+      ()=>{
+
+        alert("Location Access Denied");
+
+      }
+
+    );
+
+  }
+
+  else{
+
+    alert("Geolocation not supported");
+
+  }
+
+}
+
+function shareLocation(){
+
+  if(navigator.geolocation){
+
+    watchId = navigator.geolocation.watchPosition(
+
+      (position)=>{
+
+        let latitude = position.coords.latitude;
+        let longitude = position.coords.longitude;
+
+        document.getElementById("locationBox").innerHTML =
+        `
+        📍 Live Location Sharing Active <br><br>
+
+        <b>Latitude:</b> ${latitude} <br>
+        <b>Longitude:</b> ${longitude}
+        `;
+
+        document.getElementById("mapFrame").src =
+        `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
+
+      },
+
+      ()=>{
+
+        alert("Location Access Denied");
+
+      },
+
+      {
+        enableHighAccuracy:true,
+        maximumAge:0,
+        timeout:5000
+      }
+
+    );
+
+  }
+
+  else{
+
+    alert("Geolocation not supported");
+
+  }
+
+}
+
+function reportIssue(){
+
+  let issue = prompt(
+    "Enter the issue:\n\nExamples:\nTyre Puncture\nHeavy Traffic\nEngine Problem"
+  );
+
+  if(issue){
+
+    document.getElementById("locationBox").innerHTML =
+    `
+    ⚠️ Issue Report Submitted Successfully <br><br>
+
+    <b>Reported Issue:</b><br>
+    ${issue}
+    `;
+
+    alert("Issue Sent To Admin");
+
+  }
+
+  else{
+
+    alert("No Issue Entered");
+
+  }
+
+}
+
+function updateStatus(){
+
+  let status = prompt(
+    "Update Status:\n\nExamples:\nOn Time\nDelayed\nReached Stop"
+  );
+
+  if(status){
+
+    document.getElementById("statusText").innerHTML =
+    `🟢 Driver Status : ${status}`;
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>

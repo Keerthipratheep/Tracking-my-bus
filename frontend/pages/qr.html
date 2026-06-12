@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Route QR Generator</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+
+    background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+
+}
+
+.container{
+
+    width:500px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(12px);
+    border-radius:20px;
+    padding:30px;
+    color:white;
+    text-align:center;
+    box-shadow:0 0 25px rgba(0,0,0,0.4);
+
+}
+
+h1{
+
+    margin-bottom:25px;
+
+}
+
+input{
+
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+
+}
+
+button{
+
+    margin-top:20px;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#f97316;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+
+}
+
+button:hover{
+
+    background:#ea580c;
+
+}
+
+#qrcode{
+
+    margin-top:25px;
+    display:flex;
+    justify-content:center;
+
+}
+
+#routeLink{
+
+    margin-top:20px;
+    word-break:break-word;
+    font-size:14px;
+
+}
+
+.success{
+
+    color:#22c55e;
+    margin-top:15px;
+    font-weight:bold;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🚌 Route QR Generator</h1>
+
+    <input
+    type="text"
+    id="routeName"
+    placeholder="Enter Route Name">
+
+    <button onclick="generateQR()">
+        Generate Route QR
+    </button>
+
+    <div id="message"></div>
+
+    <div id="qrcode"></div>
+
+    <div id="routeLink"></div>
+
+</div>
+
+<script>
+
+function generateQR(){
+
+    const routeName =
+    document.getElementById("routeName").value.trim();
+
+    if(routeName === ""){
+
+        alert("Please Enter Route Name");
+        return;
+
+    }
+
+    document.getElementById("qrcode").innerHTML = "";
+
+    const qrURL =
+    `http://localhost:8000/Parent.html?route=${encodeURIComponent(routeName)}`;
+
+    new QRCode(
+        document.getElementById("qrcode"),
+        {
+            text: qrURL,
+            width: 250,
+            height: 250
+        }
+    );
+
+    document.getElementById("message").innerHTML =
+    `<div class="success">
+        ✅ QR Generated Successfully
+     </div>`;
+
+    document.getElementById("routeLink").innerHTML =
+    `
+    <strong>QR URL:</strong>
+    <br><br>
+    ${qrURL}
+    `;
+}
+
+</script>
+
+</body>
+
+</html>
